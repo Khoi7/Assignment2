@@ -18,6 +18,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="505.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
+      <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" layoutX="526.0" layoutY="14.0" visible="false" />
       <ImageView fitHeight="516.0" fitWidth="904.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../theme.png" />
@@ -39,7 +40,71 @@
             </Button>
          </children>
       </HBox>
-      <GridPane fx:id="gridPane" gridLinesVisible="true" layoutX="46.0" layoutY="76.0" prefHeight="306.0" prefWidth="380.0" visible="false">
+      <HBox layoutX="716.0" prefHeight="62.0" prefWidth="182.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="62.0" prefWidth="92.0" text="LEVEL" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="level" alignment="CENTER" prefHeight="64.0" prefWidth="92.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="14.0" layoutY="431.0" prefHeight="30.0" prefWidth="200.0">
+         <children>
+            <Label prefHeight="26.0" prefWidth="57.0" text="Time" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <ProgressBar prefHeight="28.0" prefWidth="143.0" />
+         </children>
+      </HBox>
+      <HBox layoutX="14.0" layoutY="-11.0" prefHeight="62.0" prefWidth="205.0">
+         <children>
+            <Label prefHeight="112.0" prefWidth="100.0" text="SCORE" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="scoreLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="104.0" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <VBox fx:id="levelVBox" layoutX="347.0" layoutY="189.0" prefHeight="100.0" prefWidth="205.0" visible="false">
+         <children>
+            <Label alignment="CENTER" prefHeight="52.0" prefWidth="205.0" text="Choose a level">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="level1" mnemonicParsing="false" onAction="#pressLevel1" prefHeight="40.0" prefWidth="70.0" text="1" />
+                  <Button fx:id="level2" mnemonicParsing="false" onAction="#pressLevel2" prefHeight="40.0" prefWidth="70.0" text="2" />
+                  <Button fx:id="level3" mnemonicParsing="false" onAction="#pressLevel3" prefHeight="40.0" prefWidth="68.0" text="3" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <ImageView fx:id="playSound" fitHeight="48.0" fitWidth="55.0" layoutX="850.0" layoutY="457.0" onMouseClicked="#speakerPress" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../sound%20button.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="muteSound" fitHeight="48.0" fitWidth="55.0" layoutX="850.0" layoutY="457.0" onMouseClicked="#speakerPress" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../mute%20button.jpg" />
+         </image>
+      </ImageView>
+      <GridPane fx:id="gridPane" gridLinesVisible="true" layoutX="46.0" layoutY="100.0" prefHeight="306.0" prefWidth="380.0" visible="false">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -143,70 +208,5 @@
             <Insets />
          </opaqueInsets>
       </GridPane>
-      <HBox layoutX="716.0" prefHeight="62.0" prefWidth="182.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="62.0" prefWidth="92.0" text="LEVEL" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="25.0" />
-               </font>
-            </Label>
-            <Label fx:id="level" alignment="CENTER" prefHeight="64.0" prefWidth="92.0" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="25.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <HBox layoutX="14.0" layoutY="431.0" prefHeight="30.0" prefWidth="200.0">
-         <children>
-            <Label prefHeight="26.0" prefWidth="57.0" text="Time" textFill="RED">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Label>
-            <ProgressBar prefHeight="28.0" prefWidth="143.0" progress="0.72" />
-         </children>
-      </HBox>
-      <HBox layoutX="14.0" layoutY="-11.0" prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <Label prefHeight="100.0" prefWidth="104.0" text="SCORE" textFill="RED">
-               <font>
-                  <Font name="System Bold" size="30.0" />
-               </font>
-            </Label>
-            <Label fx:id="scoreLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="104.0" textFill="RED">
-               <font>
-                  <Font name="System Bold" size="30.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <VBox fx:id="levelVBox" layoutX="347.0" layoutY="189.0" prefHeight="100.0" prefWidth="205.0" visible="false">
-         <children>
-            <Label alignment="CENTER" prefHeight="52.0" prefWidth="205.0" text="Choose a level">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Label>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="level1" mnemonicParsing="false" onAction="#pressLevel1" prefHeight="40.0" prefWidth="70.0" text="1" />
-                  <Button fx:id="level2" mnemonicParsing="false" onAction="#pressLevel2" prefHeight="40.0" prefWidth="70.0" text="2" />
-                  <Button fx:id="level3" mnemonicParsing="false" onAction="#pressLevel3" prefHeight="40.0" prefWidth="68.0" text="3" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-      <ImageView fx:id="playSound" fitHeight="48.0" fitWidth="55.0" layoutX="850.0" layoutY="457.0" onMouseClicked="#speakerPress" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../sound%20button.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="muteSound" fitHeight="48.0" fitWidth="55.0" layoutX="850.0" layoutY="457.0" onMouseClicked="#speakerPress" pickOnBounds="true" preserveRatio="true" visible="false">
-         <image>
-            <Image url="@../mute%20button.jpg" />
-         </image>
-      </ImageView>
-      <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" layoutX="14.0" layoutY="108.0" visible="false" />
    </children>
 </Pane>

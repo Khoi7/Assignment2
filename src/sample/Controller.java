@@ -30,9 +30,7 @@ import javafx.scene.media.MediaView;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller implements Initializable {
     // FXML ids
@@ -216,6 +214,7 @@ public class Controller implements Initializable {
         return true;
     }
 
+    ImageView flippedCard1, flippedCard2;
     public void pressCard(MouseEvent cardClick) {
         // Intialize the ArrayList
         ArrayList<String> ivList = new ArrayList();
@@ -240,21 +239,45 @@ public class Controller implements Initializable {
         ivList.add(iv19.getId());
         ivList.add(iv20.getId());
 
-        ImageView flippedCard1, flippedCard2;
         ImageView target = (ImageView) cardClick.getTarget();
-        iv1.setDisable(true);
+
+        TimerTask task =  new TimerTask() {
+            @Override
+            public void run() {
+                if (cardMatch(flippedCard1, flippedCard2)) {
+                    flippedCard2.setDisable(true);
+                    flippedCard1.setDisable(true);
+                    flippedCard = 0;
+                } else if (!cardMatch(flippedCard1, flippedCard2)) {
+                    target.setImage(Cup);
+                    flippedCard--;
+                }
+            }
+        };
+        Timer timer = new Timer();
+
         if (cardClick.getButton() == MouseButton.PRIMARY) {
             if (cardCheckFlipped(target) == false) {
                 if (flippedCard >= 2) {
-                } else if (flippedCard < 2) {
+                }
+                else if (flippedCard < 2) {
                     int temp = ivList.indexOf(target.getId());
                     target.setImage(selectedPhotos[temp]);
                     flippedCard++;
+                    if(flippedCard == 1) {
+                        flippedCard1 = (ImageView)cardClick.getSource();
+                    } else if (flippedCard == 2) {
+                        flippedCard2 = (ImageView)cardClick.getSource();
+                    }
+                    timer.schedule(task, 3000);
                 }
-            } else if (cardCheckFlipped(target) == true) {
-                target.setImage(Cup);
-                flippedCard--;
-            }
+            } //else if (cardCheckFlipped(target) == true) {
+//                target.setImage(Cup);
+//                flippedCard--;
+//                if (cardMatch(target, flippedCard1)) {
+//                    flippedCard1 = flippedCard2;
+//                }
+//            }
         }
     }
 }

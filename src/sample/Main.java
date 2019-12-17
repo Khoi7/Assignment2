@@ -27,7 +27,6 @@ public class Main extends Application {
         primaryStage.setTitle("Photo-matching game");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
-
     }
 
     public static void main(String[] args) {

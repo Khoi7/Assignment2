@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -35,7 +36,9 @@ import java.util.*;
 public class Controller implements Initializable {
     // FXML ids
     @FXML
-    public MediaView mediaView;
+    private ProgressBar timeBar;
+    @FXML
+    private MediaView mediaView;
     @FXML
     private Label scoreLabel;
     @FXML
@@ -121,7 +124,10 @@ public class Controller implements Initializable {
 
     boolean speakerCheck = true;
     public int score = 0;
+    public int totalScore;
     public int flippedCard = 0;
+    public int pairFound = 0;
+    public float timeleft = 120;
 
     public void randomCards() {
         // Initialize photoList
@@ -139,22 +145,39 @@ public class Controller implements Initializable {
             numberOfRandom--;
         }
     }
+    public void startCountDown() {
+        timeBar.setProgress(timeleft/120);
+        Timer timer = new Timer();
+        TimerTask countDown = new TimerTask() {
+            @Override
+            public void run() {
+                if(timeleft > 0){
+                    timeleft--;
+                }
+                timeBar.setProgress(timeleft/120);
+            }
+        };
+        timer.schedule(countDown, 1000, 3000);
+    }
 
     // Actions with button for choosing level
     public void pressLevel1 (ActionEvent chooseLevel1) {
         levelVBox.setVisible(false);
         gridPane.setVisible(true);
         level.setText("1");
+        startCountDown();
     }
     public void pressLevel2 (ActionEvent chooseLevel2) {
         levelVBox.setVisible(false);
         gridPane.setVisible(true);
         level.setText("2");
+        startCountDown();
     }
     public void pressLevel3 (ActionEvent chooseLevel3) {
         levelVBox.setVisible(false);
         gridPane.setVisible(true);
         level.setText("3");
+        startCountDown();
     }
 
     // Action with speaker icon
@@ -199,7 +222,6 @@ public class Controller implements Initializable {
         levelVBox.setVisible(false);
         gridPane.setVisible(false);
     }
-
     // Action with cards
     public boolean cardMatch(ImageView v1, ImageView v2) {
         if (v1.getImage().getUrl().compareTo(v2.getImage().getUrl()) == 0) {
@@ -248,6 +270,8 @@ public class Controller implements Initializable {
                     flippedCard2.setDisable(true);
                     flippedCard1.setDisable(true);
                     flippedCard = 0;
+                    pairFound++;
+                    System.out.println(pairFound);
                 } else if (!cardMatch(flippedCard1, flippedCard2)) {
                     target.setImage(Cup);
                     flippedCard--;
@@ -255,6 +279,21 @@ public class Controller implements Initializable {
             }
         };
         Timer timer = new Timer();
+        int delay;
+        switch (Integer.parseInt(level.getText())) {
+            case 1:
+                delay = 3000;
+                break;
+            case 2:
+                delay = 2000;
+                break;
+            case 3:
+                delay = 1000;
+                break;
+            default:
+                delay = 0;
+                break;
+        }
 
         if (cardClick.getButton() == MouseButton.PRIMARY) {
             if (cardCheckFlipped(target) == false) {
@@ -269,9 +308,11 @@ public class Controller implements Initializable {
                     } else if (flippedCard == 2) {
                         flippedCard2 = (ImageView)cardClick.getSource();
                     }
-                    timer.schedule(task, 3000);
+                    timer.schedule(task, delay);
                 }
-            } //else if (cardCheckFlipped(target) == true) {
+            }
+            //(not allow to manually flip back down anymore)
+            // else if (cardCheckFlipped(target) == true) {
 //                target.setImage(Cup);
 //                flippedCard--;
 //                if (cardMatch(target, flippedCard1)) {
